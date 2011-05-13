@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Race manager</title>
+        <link type="text/css" rel="stylesheet" media="screen" href="jqtouch/jqtouch.css">
+        <link type="text/css" rel="stylesheet" media="screen" href="themes/jqt/theme.css">
+        <script type="text/javascript" src="jqtouch/jquery.js"></script>
+        <script type="text/javascript" src="jqtouch/jqtouch.js"></script>
+        <script type="text/javascript">
+            var jQT = $.jQTouch({
+                icon: 'vph.png'
+            });
+        </script>
+    </head>
+	
+    <body>
+        <div id="home">
+            <div class="toolbar">
+                <h1>Race manager</h1>
+            </div>
+			<ul class="edgetoedge">
+				<li class="arrow"><a href="#newrace">Start new race</a></li>
+				<li class="arrow"><a href="#selectrace">Manage existing races</a></li>
+			</ul>
+		</div>
+		<div id="selectrace">
+		    <div class="toolbar">
+                <h1>Select race</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+			<ul class="edgetoedge">
+                <li class="arrow"><a href="#existingrace">list of races goes here</a></li>
+			</ul>
+		</div>
+		<div id="existingrace">
+		    <div class="toolbar">
+                <h1>Race name</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+			<ul class="edgetoedge">
+                <li class="arrow"><a href="#enterhandicaps">Enter handicaps</a></li>
+				<li class="arrow"><a href="#viewstarters">View start list</a></li>
+				<li class="arrow"><a href="#entertimes">Enter finish times</a></li>
+				<li class="arrow"><a href="#enterorder">Enter finish order</a></li>
+				<li class="arrow"><a href="#viewresults">View results</a></li>
+			</ul>
+		</div>
+				
+        <div id="newrace">
+            <div class="toolbar">
+                <h1>New race</h1>
+                <a class="button cancel" href="#">Cancel</a>
+            </div>
+            <form method="post">
+                <ul class="rounded">
+                    <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+					<li><input type="text" placeholder="Notes" name="notes" id="notes" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
+                </ul>
+            </form>
+        </div>
+			
+		<div id="enterhandicaps">
+			<div class="toolbar">
+				<h1>Enter predictions</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		</div>
+		
+		<div id="enterorder">
+			<div class="toolbar">
+				<h1>Enter finish order</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		</div>
+		
+		<div id="viewresults">
+			<div class="toolbar">
+				<h1>Race name results</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		</div>
+		
+		<div id="viewstarters">
+            <div class="toolbar">
+                <h1>Start list</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+            <ul class="edgetoedge">
+                <li id="entryTemplate" class="entry" style="display:none">
+                    <span class="label">Label</span> <span class="calories">000</span> <span class="delete">Delete</span>
+                </li>
+            </ul>
+        </div>
+		
+		<div id="entertimes">
+			<div class="toolbar">
+				<h1>Enter actual times</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		</div>
+		
+        <div id="viewresults">
+            <div class="toolbar">
+                <h1>View results</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+            <ul class="edgetoedge">
+            </ul>
+        </div>
+        
+       
+        
+    </body>
+</html>
