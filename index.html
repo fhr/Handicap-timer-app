@@ -6,6 +6,7 @@
         <link type="text/css" rel="stylesheet" media="screen" href="themes/jqt/theme.css">
         <script type="text/javascript" src="jqtouch/jquery.js"></script>
         <script type="text/javascript" src="jqtouch/jqtouch.js"></script>
+		<script type="text/javascript" src="handicap.js"></script>
         <script type="text/javascript">
             var jQT = $.jQTouch({
                 icon: 'vph.png'
@@ -32,9 +33,29 @@
                 <li class="arrow"><a href="#existingrace">list of races goes here</a></li>
 			</ul>
 		</div>
+		<div id="newrace">
+            <div class="toolbar">
+                <h1>New race</h1>
+                <a class="button cancel" href="#">Cancel</a>
+            </div>
+            <form method="post">
+                <ul class="rounded">
+                    <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+					<li><input type="text" placeholder="Race name" name="racename" id="racename" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
+                </ul>
+            </form>
+        </div>
+		
 		<div id="existingrace">
-		    <div class="toolbar">
-                <h1>Race name</h1>
+		    <div class="toolbar" id="existingracetitle">
+			<h1></h1>
+			<script type="text/javascript">
+			$('#racename').val(localStorage.racename);
+			document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
+			</script>
+			
                 <a class="button back" href="#">Back</a>
             </div>
 			<ul class="edgetoedge">
@@ -46,20 +67,7 @@
 			</ul>
 		</div>
 				
-        <div id="newrace">
-            <div class="toolbar">
-                <h1>New race</h1>
-                <a class="button cancel" href="#">Cancel</a>
-            </div>
-            <form method="post">
-                <ul class="rounded">
-                    <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-                    <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-					<li><input type="text" placeholder="Notes" name="notes" id="notes" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-                    <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
-                </ul>
-            </form>
-        </div>
+        
 			
 		<div id="enterhandicaps">
 			<div class="toolbar">
