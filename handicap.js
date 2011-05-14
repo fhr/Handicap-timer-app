@@ -1,6 +1,21 @@
 $(document).ready(function(){
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
+	$('#enterhandicaps form').submit(savePrediction);
+
+	// create database to hold data on predicted and actual times
+	var shortName = 'Handicaps';
+    var version = '1.0';
+    var displayName = 'Handicaps';
+    var maxSize = 65536;
+    db = openDatabase(shortName, version, displayName, maxSize);
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER NOT NULL );'
+            );
+        }
+    );
 }
 );
 
@@ -17,3 +32,23 @@ function setTitle() {
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
 }
 
+function savePrediction() {
+	var racename = document.getElementById('racename').value;
+    var runner = $('#runner').val();
+    var prediction = $('#prediction').val();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'INSERT INTO predictions (racename, runner, prediction) VALUES (?, ?, ?);', 
+                [racename, runner, prediction]
+            );
+        }
+    );
+    return false;
+}
+
+function errorHandler(transaction, error) {
+    alert('Oops. Error was '+error.message+' (Code '+error.code+')');
+    return true;
+}
+        
