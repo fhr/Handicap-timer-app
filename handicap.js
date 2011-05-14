@@ -2,7 +2,6 @@ $(document).ready(function(){
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
 	$('#enterhandicaps form').submit(savePrediction);
-
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
     var version = '1.0';
@@ -44,7 +43,6 @@ function savePrediction() {
             );
         }
     );
-    return false;
 }
 
 function errorHandler(transaction, error) {
@@ -52,3 +50,28 @@ function errorHandler(transaction, error) {
     return true;
 }
         
+		
+function refreshEntries() {
+	var racename = sessionStorage.racename;
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? ORDER BY prediction;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#enteredrunners').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.appendTo('#existingpredictions ul');
+                        newEntryRow.find('.runner').text(row.runner);
+                        newEntryRow.find('.prediction').text(row.prediction);
+                    }
+                }, 
+                errorHandler
+            );
+        }
+    );
+}
