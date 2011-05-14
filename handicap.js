@@ -1,5 +1,6 @@
 $(document).ready(function(){
     $('#newrace form').submit(saveRace);
+	$('#newrace form').submit(setTitle);
 }
 );
 
@@ -11,4 +12,8 @@ function saveRace() {
     return false;
 }
 
+function setTitle() {
+	$('#racename').val(localStorage.racename);
+	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
+}
 
