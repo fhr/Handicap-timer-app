@@ -18,6 +18,15 @@ $(document).ready(function(){
 }
 );
 
+function deleteEntryById(id) {
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql('DELETE FROM predictions WHERE id=?;', 
+              [id], null, errorHandler);
+        }
+    );
+}
+
 function saveRace() {
     localStorage.date = $('#date').val();
     localStorage.distance = $('#distance').val();
@@ -29,6 +38,7 @@ function saveRace() {
 function setTitle() {
 	$('#racename').val(localStorage.racename);
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
+	document.getElementById('handicaptitle').innerHTML = document.getElementById('racename').value + ' predictions';
 }
 
 
@@ -57,6 +67,12 @@ function refreshEntries() {
                         newEntryRow.appendTo('#enteredrunners');
                         newEntryRow.find('.runner').text(row.runner);
                         newEntryRow.find('.prediction').text(row.prediction);
+						newEntryRow.find('.delete').click(function(){
+							var clickedEntry = $(this).parent();
+							var clickedEntryId = clickedEntry.data('entryId');
+							deleteEntryById(clickedEntryId);
+							clickedEntry.slideUp();
+    });
                     }
                 }, 
                 errorHandler
@@ -79,3 +95,6 @@ function savePrediction() {
     );
 	refreshEntries();
 }
+
+
+

@@ -4,6 +4,7 @@
         <title>Race manager</title>
         <link type="text/css" rel="stylesheet" media="screen" href="jqtouch/jqtouch.css">
         <link type="text/css" rel="stylesheet" media="screen" href="themes/jqt/theme.css">
+		<link type="text/css" rel="stylesheet" media="screen" href="handicap.css">
         <script type="text/javascript" src="jqtouch/jquery.js"></script>
         <script type="text/javascript" src="jqtouch/jqtouch.js"></script>
 		<script type="text/javascript" src="handicap.js"></script>
@@ -40,9 +41,9 @@
             </div>
             <form method="post">
                 <ul class="rounded">
+					<li><input type="text" placeholder="Race name" name="racename" id="racename" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
                     <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
                     <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-					<li><input type="text" placeholder="Race name" name="racename" id="racename" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
                     <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
                 </ul>
             </form>
@@ -50,7 +51,7 @@
 		
 		<div id="existingrace">
 		    <div class="toolbar">
-			<h1><div id=existingracetitle> </div></h1>			
+			<h1><div id=existingracetitle></div></h1>			
                 <a class="button back" href="#">Back</a>
             </div>
 			<ul class="edgetoedge">
@@ -66,7 +67,7 @@
 			
 		<div id="enterhandicaps">
 			<div class="toolbar">
-				<h1>Enter predictions</h1>
+			<h1><div id=handicaptitle></div></h1>		
 				<a class="button back" href="#">Back</a>
 			</div>
 			<form method="post">
@@ -80,6 +81,7 @@
 				<li class="entry" style="display:none" id="template">
 					<span class="runner">runner</span>
 					<span class="prediction">000</span>
+					<span class="delete">Delete</span>
 				</li>
 			</ul>
 		</div>
