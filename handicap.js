@@ -12,8 +12,10 @@ $(document).ready(function(){
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER NOT NULL, start INTEGER NOT NULL );',
-				'CREATE TABLE IF NOT EXISTS races (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, date DATE NOT NULL, distance FLOAT NOT NULL;'
+                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER, start INTEGER);'
+			);
+			transaction.executeSql(
+                'CREATE TABLE IF NOT EXISTS races (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, date TEXT, distance REAL);'
 			);
         }
     );
@@ -21,7 +23,8 @@ $(document).ready(function(){
 );
 
 function deleteEntryById(id) {
-    db.transaction(
+    alert(id);
+	db.transaction(
         function(transaction) {
             transaction.executeSql('DELETE FROM predictions WHERE id=?;', 
               [id], null, errorHandler);
@@ -29,8 +32,20 @@ function deleteEntryById(id) {
     );
 }
 
+function deleteRaceById(raceid) {
+    alert(raceid);
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql('DELETE FROM races where id=?;', 
+              [raceid], null, errorHandler);
+        }
+    );
+	alert('deleted race');
+}
+
 function saveRace() {
-    localStorage.date = $('#date').val();
+    alert('starting saverace');
+	localStorage.date = $('#date').val();
     localStorage.distance = $('#distance').val();
     localStorage.racename = $('#racename').val();
 	var date = $('#date').val();
@@ -61,7 +76,6 @@ function savePrediction() {
         }
     );
 	refreshEntries();
-	calcHandicaps();
 }
 
 
@@ -133,6 +147,7 @@ function showStarters() {
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
+							alert(clickedEntryId);
 							deleteEntryById(clickedEntryId);
 							clickedEntry.slideUp();
     });
@@ -164,22 +179,26 @@ function raceList() {
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'SELECT * FROM races order by racename;', 
+                'SELECT * FROM races order by racename;', [],
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
                         var newEntryRow = $('#racelisttemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
-                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.data('raceId', row.id);
                         newEntryRow.appendTo('#existingraces');
                         newEntryRow.find('.oldrace').text(row.racename);
+						newEntryRow.find('.oldrace').click(function(){
+							alert('test href'); // figure out how to reset current race var and add href here
+							var clickedRace=$(this).parent();
+						});
 						newEntryRow.find('.delete').click(function(){
-							var clickedEntry = $(this).parent();
-							var clickedEntryId = clickedEntry.data('entryId');
-							deleteEntryById(clickedEntryId);
-							clickedEntry.slideUp();
-    });
+							var clickedRace = $(this).parent();
+							var clickedRaceId = clickedRace.data('raceId');
+							deleteRaceById(clickedRaceId);
+							clickedRace.slideUp();
+						});
                     }
                 }, 
                 errorHandler

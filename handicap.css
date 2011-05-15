@@ -1,29 +1,15 @@
-#enteredrunners li {
-    position: relative;
-}
-#enteredrunners li span {
-    color: #FFFFFF;
-    text-shadow: 0 1px 2px rgba(0,0,0,.7);
-}
-#enteredrunners li .delete {
-    position: absolute;
-    top: 5px;
-    right: 6px;
-    font-size: 12px;
-    line-height: 30px;
-    padding: 0 3px;
-    border-width: 0 5px;
-    -webkit-border-image: url(themes/jqt/img/button.png) 0 5 0 5;
-}       
+     
 
-#viewstarters li {
+li {
     position: relative;
 }
-#viewstarters li span {
+
+li span {
     color: #FFFFFF;
     text-shadow: 0 1px 2px rgba(0,0,0,.7);
 }
-#viewstarters li .delete {
+
+li .delete {
     position: absolute;
     top: 5px;
     right: 6px;
@@ -32,4 +18,4 @@
     padding: 0 3px;
     border-width: 0 5px;
     -webkit-border-image: url(themes/jqt/img/button.png) 0 5 0 5;
-}       
+}   
