@@ -1,27 +1,26 @@
-queries for all entries on race date
 
+time // name // expected race
 
-function refreshEntries() {
+function calcHandicaps() {
 	var racename = document.getElementById('racename').value;
-    db.transaction(
+	db.transaction(
         function(transaction) {
-            transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
-                [racename], 
-                function (transaction, result) {
-                    for (var i=0; i < result.rows.length; i++) {
-                        var row = result.rows.item(i);
-                        var newEntryRow = $('#template').clone();
-                        newEntryRow.removeAttr('id');
-                        newEntryRow.removeAttr('style');
-                        newEntryRow.data('entryId', row.id);
-                        newEntryRow.appendTo('#enteredrunners');
-                        newEntryRow.find('.runner').text(row.runner);
-                        newEntryRow.find('.prediction').text(row.prediction);
-                    }
-                }, 
-                errorHandler
-            );
-        }
-    );
+            transaction.executeSql('select max(prediction) from predictions where racename=?;', [racename],
+                function(transaction, result) {
+					var maxtime=19}
+            )       
+        };
+	);
+	
+	
+	
+	
+	db.transaction(
+		function(transaction) {
+			transaction.executeSql(
+				'update predictions set start=? where racename = ?;',
+				[maxtime,racename]
+			);
+		}
+	);
 }
