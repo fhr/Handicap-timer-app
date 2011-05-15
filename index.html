@@ -25,6 +25,7 @@
 				<li class="arrow"><a href="#selectrace">Manage existing races</a></li>
 			</ul>
 		</div>
+		
 		<div id="selectrace">
 		    <div class="toolbar">
                 <h1>Select race</h1>
@@ -34,6 +35,7 @@
                 <li class="arrow"><a href="#existingrace">list of races goes here</a></li>
 			</ul>
 		</div>
+		
 		<div id="newrace">
             <div class="toolbar">
                 <h1>New race</h1>
@@ -56,7 +58,7 @@
             </div>
 			<ul class="edgetoedge">
                 <li class="arrow"><a href="#enterhandicaps">Enter handicaps</a></li>
-				<li class="arrow"><a href="#viewstarters">View start list</a></li>
+				<li class="arrow"><a href="#viewstarters" onClick="showStarters();return true">View start list</a></li>
 				<li class="arrow"><a href="#entertimes">Enter finish times</a></li>
 				<li class="arrow"><a href="#enterorder">Enter finish order</a></li>
 				<li class="arrow"><a href="#viewresults">View results</a></li>
@@ -105,11 +107,14 @@
                 <h1>Start list</h1>
                 <a class="button back" href="#">Back</a>
             </div>
-            <ul class="edgetoedge">
-                <li id="entryTemplate" class="entry" style="display:none">
-                    <span class="label">Label</span> <span class="calories">000</span> <span class="delete">Delete</span>
-                </li>
-            </ul>
+			<ul class="edgetoedge" id="finallist">
+				<li class="entry" style="display:none" id="template">
+					<span class="start">start</span>
+					<span class="runner">runner</span>
+					<span class="prediction">000</span>
+					<span class="delete">Delete</span>
+				</li>
+			</ul>
         </div>
 		
 		<div id="entertimes">

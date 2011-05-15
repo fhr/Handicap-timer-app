@@ -11,7 +11,7 @@ $(document).ready(function(){
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER NOT NULL );'
+                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER NOT NULL, start INTEGER NOT NULL );'
             );
         }
     );
@@ -88,7 +88,7 @@ function savePrediction() {
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'INSERT INTO predictions (racename, runner, prediction) VALUES (?, ?, ?);', 
+                'INSERT INTO predictions (racename, runner, prediction,start) VALUES (?, ?, ?,0);', 
                 [racename, runner, prediction]
             );
         }
@@ -96,5 +96,36 @@ function savePrediction() {
 	refreshEntries();
 }
 
-
+function showStarters() {
+	var racename = document.getElementById('racename').value;
+	$('#finallist li:gt(0)').remove();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#template').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.appendTo('#finallist');
+                        newEntryRow.find('.start').text(row.start);
+						newEntryRow.find('.runner').text(row.runner);
+                        newEntryRow.find('.prediction').text(row.prediction);
+						newEntryRow.find('.delete').click(function(){
+							var clickedEntry = $(this).parent();
+							var clickedEntryId = clickedEntry.data('entryId');
+							deleteEntryById(clickedEntryId);
+							clickedEntry.slideUp();
+    });
+                    }
+                }, 
+                errorHandler
+            );
+        }
+    );
+}
 
