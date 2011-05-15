@@ -31,6 +31,40 @@ function setTitle() {
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
 }
 
+
+
+function errorHandler(transaction, error) {
+    alert('Oops. Error was '+error.message+' (Code '+error.code+')');
+    return true;
+}
+        
+		
+function refreshEntries() {
+	var racename = document.getElementById('racename').value;
+	$('#enteredrunners li:gt(0)').remove();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#template').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.appendTo('#enteredrunners');
+                        newEntryRow.find('.runner').text(row.runner);
+                        newEntryRow.find('.prediction').text(row.prediction);
+                    }
+                }, 
+                errorHandler
+            );
+        }
+    );
+}
+
 function savePrediction() {
 	var racename = document.getElementById('racename').value;
     var runner = $('#runner').val();
@@ -43,35 +77,5 @@ function savePrediction() {
             );
         }
     );
-}
-
-function errorHandler(transaction, error) {
-    alert('Oops. Error was '+error.message+' (Code '+error.code+')');
-    return true;
-}
-        
-		
-function refreshEntries() {
-	var racename = sessionStorage.racename;
-    db.transaction(
-        function(transaction) {
-            transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? ORDER BY prediction;', 
-                [racename], 
-                function (transaction, result) {
-                    for (var i=0; i < result.rows.length; i++) {
-                        var row = result.rows.item(i);
-                        var newEntryRow = $('#enteredrunners').clone();
-                        newEntryRow.removeAttr('id');
-                        newEntryRow.removeAttr('style');
-                        newEntryRow.data('entryId', row.id);
-                        newEntryRow.appendTo('#existingpredictions ul');
-                        newEntryRow.find('.runner').text(row.runner);
-                        newEntryRow.find('.prediction').text(row.prediction);
-                    }
-                }, 
-                errorHandler
-            );
-        }
-    );
+	refreshEntries();
 }

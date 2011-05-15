@@ -1,0 +1,27 @@
+queries for all entries on race date
+
+
+function refreshEntries() {
+	var racename = document.getElementById('racename').value;
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#template').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.appendTo('#enteredrunners');
+                        newEntryRow.find('.runner').text(row.runner);
+                        newEntryRow.find('.prediction').text(row.prediction);
+                    }
+                }, 
+                errorHandler
+            );
+        }
+    );
+}
