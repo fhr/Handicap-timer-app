@@ -1,8 +1,8 @@
 $(document).ready(function(){
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
-	$('#newrace form').submit(raceList);
 	$('#enterhandicaps form').submit(savePrediction);
+	$('#calcraces').click(raceList);
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
     var version = '1.0';
@@ -90,7 +90,7 @@ function refreshEntries() {
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
-                        var newEntryRow = $('#template').clone();
+                        var newEntryRow = $('#predictiontemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
                         newEntryRow.data('entryId', row.id);
@@ -117,19 +117,19 @@ function showStarters() {
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
+                'SELECT * FROM predictions WHERE racename = ? order by prediction desc;', 
                 [racename], 
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
-                        var newEntryRow = $('#template').clone();
+                        var newEntryRow = $('#startlisttemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
                         newEntryRow.data('entryId', row.id);
                         newEntryRow.appendTo('#finallist');
                         newEntryRow.find('.start').text(row.start);
 						newEntryRow.find('.runner').text(row.runner);
-                        newEntryRow.find('.prediction').text(row.prediction);
+                        newEntryRow.find('.prediction').text('('+row.prediction+')');
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
@@ -168,7 +168,7 @@ function raceList() {
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
-                        var newEntryRow = $('#template').clone();
+                        var newEntryRow = $('#racelisttemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
                         newEntryRow.data('entryId', row.id);

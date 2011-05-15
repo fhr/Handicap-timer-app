@@ -22,7 +22,7 @@
             </div>
 			<ul class="edgetoedge">
 				<li class="arrow"><a href="#newrace">Start new race</a></li>
-				<li class="arrow"><a href="#selectrace">Manage existing races</a></li>
+				<li class="arrow"><a href="#selectrace" id="calcraces">Manage existing races</a></li>
 			</ul>
 		</div>
 		
@@ -32,8 +32,8 @@
                 <a class="button back" href="#">Back</a>
             </div>
 			<ul class="edgetoedge" id="existingraces">
-                <li class="entry" style="display:none" id="template">
-					<span class="oldrace">Race</span>
+                <li class="entry" style="display:none" id="racelisttemplate">
+					<span class="oldrace">oldracename</span>
 					<span class="delete">Delete</span>
 				</li>
 			</ul>
@@ -83,7 +83,7 @@
                 </ul>
             </form>
 			<ul class="edgetoedge" id="enteredrunners">
-				<li class="entry" style="display:none" id="template">
+				<li class="entry" style="display:none" id="predictiontemplate">
 					<span class="runner">runner</span>
 					<span class="prediction">000</span>
 					<span class="delete">Delete</span>
@@ -110,8 +110,9 @@
                 <h1>Start list</h1>
                 <a class="button back" href="#">Back</a>
             </div>
+			Set runners off at the times shown. Predicted finish time shown in brackets
 			<ul class="edgetoedge" id="finallist">
-				<li class="entry" style="display:none" id="template">
+				<li class="entry" style="display:none" id="startlisttemplate">
 					<span class="start">start</span>
 					<span class="runner">runner</span>
 					<span class="prediction">000</span>
