@@ -81,6 +81,7 @@ function savePrediction() {
 
 function setTitle() {
 	$('#racename').val(localStorage.racename);
+	alert(localStorage.racename);
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
 	document.getElementById('handicaptitle').innerHTML = document.getElementById('racename').value + ' predictions';
 }
@@ -190,8 +191,10 @@ function raceList() {
                         newEntryRow.appendTo('#existingraces');
                         newEntryRow.find('.oldrace').text(row.racename);
 						newEntryRow.find('.oldrace').click(function(){
-							alert('test href'); // figure out how to reset current race var and add href here
-							var clickedRace=$(this).parent();
+							var clickedRace=$(this).text();
+							localStorage.racename = clickedRace;
+							setTitle();
+							jQT.goTo('#existingrace');
 						});
 						newEntryRow.find('.delete').click(function(){
 							var clickedRace = $(this).parent();
@@ -206,4 +209,5 @@ function raceList() {
         }
     );
 }
+
 
