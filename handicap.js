@@ -23,7 +23,6 @@ $(document).ready(function(){
 );
 
 function deleteEntryById(id) {
-    alert(id);
 	db.transaction(
         function(transaction) {
             transaction.executeSql('DELETE FROM predictions WHERE id=?;', 
@@ -33,18 +32,15 @@ function deleteEntryById(id) {
 }
 
 function deleteRaceById(raceid) {
-    alert(raceid);
 	db.transaction(
         function(transaction) {
             transaction.executeSql('DELETE FROM races where id=?;', 
               [raceid], null, errorHandler);
         }
     );
-	alert('deleted race');
 }
 
 function saveRace() {
-    alert('starting saverace');
 	localStorage.date = $('#date').val();
     localStorage.distance = $('#distance').val();
     localStorage.racename = $('#racename').val();
@@ -81,7 +77,6 @@ function savePrediction() {
 
 function setTitle() {
 	$('#racename').val(localStorage.racename);
-	alert(localStorage.racename);
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
 	document.getElementById('handicaptitle').innerHTML = document.getElementById('racename').value + ' predictions';
 }
@@ -148,7 +143,6 @@ function showStarters() {
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
-							alert(clickedEntryId);
 							deleteEntryById(clickedEntryId);
 							clickedEntry.slideUp();
     });
@@ -161,17 +155,34 @@ function showStarters() {
 }
 
 function calcHandicaps() {
-	var racename = document.getElementById('racename').value;
+	var racename = localStorage.racename;
+	alert('calculating handicaps');
+	alert(racename);
 	db.transaction(
         function(transaction) {
-            transaction.executeSql('select max(prediction) from predictions where racename=?;', [racename],
+            transaction.executeSql(
+				'SELECT * FROM predictions WHERE racename=? order by prediction desc;', 
+				[racename],
                 function(transaction, result) {
-					localStorage.maxtime = 77;}
-            )
-			$('#maxtime').val(localStorage.maxtime);
-			transaction.executeSql('update predictions set start=? where racename = ?;', [maxtime,racename]
-            )       
-        }
+				localStorage.maxtime=result.rows.item(0)['prediction'];
+				},
+				errorHandler
+			);
+        }      
+        
+	);
+	alert('local stored maxtime is '+localStorage.maxtime);
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+				'update predictions set start=?-prediction where racename = ?;', 
+				[localStorage.maxtime,racename],
+                function(transaction, result) {
+				},
+				errorHandler
+			);
+        }      
+        
 	);
 }
 
@@ -194,6 +205,7 @@ function raceList() {
 							var clickedRace=$(this).text();
 							localStorage.racename = clickedRace;
 							setTitle();
+							calcHandicaps();
 							jQT.goTo('#existingrace');
 						});
 						newEntryRow.find('.delete').click(function(){
