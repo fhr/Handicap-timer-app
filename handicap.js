@@ -121,39 +121,6 @@ function refreshEntries() {
     );
 }
 
-function showStarters() {
-	var racename = document.getElementById('racename').value;
-	$('#finallist li:gt(0)').remove();
-    db.transaction(
-        function(transaction) {
-            transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? order by prediction desc;', 
-                [racename], 
-                function (transaction, result) {
-                    for (var i=0; i < result.rows.length; i++) {
-                        var row = result.rows.item(i);
-                        var newEntryRow = $('#startlisttemplate').clone();
-                        newEntryRow.removeAttr('id');
-                        newEntryRow.removeAttr('style');
-                        newEntryRow.data('entryId', row.id);
-                        newEntryRow.appendTo('#finallist');
-                        newEntryRow.find('.start').text(row.start);
-						newEntryRow.find('.runner').text(row.runner);
-                        newEntryRow.find('.prediction').text('('+row.prediction+')');
-						newEntryRow.find('.delete').click(function(){
-							var clickedEntry = $(this).parent();
-							var clickedEntryId = clickedEntry.data('entryId');
-							deleteEntryById(clickedEntryId);
-							clickedEntry.slideUp();
-    });
-                    }
-                }, 
-                errorHandler
-            );
-        }
-    );
-}
-
 function calcHandicaps() {
 	var racename = localStorage.racename;
 	alert('calculating handicaps');
@@ -171,7 +138,6 @@ function calcHandicaps() {
         }      
         
 	);
-	alert('local stored maxtime is '+localStorage.maxtime);
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -185,6 +151,35 @@ function calcHandicaps() {
         
 	);
 }
+
+function showStarters() {
+	var racename = document.getElementById('racename').value;
+	calcHandicaps();
+	$('#finallist li:gt(0)').remove();
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? order by prediction desc;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#startlisttemplate').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.data('entryId', row.id);
+                        newEntryRow.appendTo('#finallist');
+                        newEntryRow.find('.start').text(row.start+' min  ');
+						newEntryRow.find('.runner').text(row.runner);
+					}
+                }, 
+                errorHandler
+            );
+        }
+    );
+}
+
+
 
 function raceList() {
 	$('#existingraces li:gt(0)').remove();
@@ -205,7 +200,6 @@ function raceList() {
 							var clickedRace=$(this).text();
 							localStorage.racename = clickedRace;
 							setTitle();
-							calcHandicaps();
 							jQT.goTo('#existingrace');
 						});
 						newEntryRow.find('.delete').click(function(){
