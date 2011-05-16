@@ -1,3 +1,4 @@
+// initialise all important functions
 $(document).ready(function(){
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
@@ -22,24 +23,17 @@ $(document).ready(function(){
 }
 );
 
-function deleteEntryById(id) {
+// delete a race or person entry from DB
+function deleteById(table,id) {
 	db.transaction(
         function(transaction) {
-            transaction.executeSql('DELETE FROM predictions WHERE id=?;', 
-              [id], null, errorHandler);
+            transaction.executeSql('DELETE FROM ? WHERE id=?;', 
+              [table,id], null, errorHandler);
         }
     );
 }
 
-function deleteRaceById(raceid) {
-	db.transaction(
-        function(transaction) {
-            transaction.executeSql('DELETE FROM races where id=?;', 
-              [raceid], null, errorHandler);
-        }
-    );
-}
-
+// save race form into database
 function saveRace() {
 	localStorage.date = $('#date').val();
     localStorage.distance = $('#distance').val();
@@ -59,6 +53,7 @@ function saveRace() {
     return false;
 }
 
+// save an individual time prediction
 function savePrediction() {
 	var racename = document.getElementById('racename').value;
     var runner = $('#runner').val();
@@ -74,21 +69,20 @@ function savePrediction() {
 	refreshEntries();
 }
 
-
+// set page title to current race name
 function setTitle() {
 	$('#racename').val(localStorage.racename);
 	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
 	document.getElementById('handicaptitle').innerHTML = document.getElementById('racename').value + ' predictions';
 }
 
-
-
+// handles SQL errors
 function errorHandler(transaction, error) {
     alert('Oops. Error was '+error.message+' (Code '+error.code+')');
     return true;
 }
         
-		
+// update handicap entry page to show entries so far
 function refreshEntries() {
 	var racename = document.getElementById('racename').value;
 	$('#enteredrunners li:gt(0)').remove();
@@ -110,7 +104,7 @@ function refreshEntries() {
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
-							deleteEntryById(clickedEntryId);
+							deleteById(predictions,clickedEntryId);
 							clickedEntry.slideUp();
     });
                     }
@@ -121,10 +115,9 @@ function refreshEntries() {
     );
 }
 
+// calculate handicaps for a race once all expected times are entered
 function calcHandicaps() {
 	var racename = localStorage.racename;
-	alert('calculating handicaps');
-	alert(racename);
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -152,6 +145,7 @@ function calcHandicaps() {
 	);
 }
 
+// show start list in nice format
 function showStarters() {
 	var racename = document.getElementById('racename').value;
 	calcHandicaps();
@@ -179,8 +173,7 @@ function showStarters() {
     );
 }
 
-
-
+// show list of races 
 function raceList() {
 	$('#existingraces li:gt(0)').remove();
     db.transaction(
@@ -205,7 +198,8 @@ function raceList() {
 						newEntryRow.find('.delete').click(function(){
 							var clickedRace = $(this).parent();
 							var clickedRaceId = clickedRace.data('raceId');
-							deleteRaceById(clickedRaceId);
+							var table='races';
+							deleteById(table,clickedRaceId);
 							clickedRace.slideUp();
 						});
                     }
