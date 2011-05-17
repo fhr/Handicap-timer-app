@@ -23,3 +23,15 @@ li .delete {
 .runner {
 	color: #CCFFFF;
 }
+
+.runnertext {
+	color: #CCFFFF;
+}
+
+ul .entry {
+    margin: 0px 0px 0px 0px;
+}
+
+ul li.entry {
+    padding: 0px 0px 0px 0px;
+}

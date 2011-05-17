@@ -4,6 +4,7 @@ $(document).ready(function(){
 	$('#newrace form').submit(setTitle);
 	$('#enterhandicaps form').submit(savePrediction);
 	$('#calcraces').click(raceList);
+	$('#enterhandicaps').click(refreshEntries);
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
     var version = '1.0';
@@ -36,8 +37,6 @@ function deleteById(table,id) {
 
 // save race form into database
 function saveRace() {
-	localStorage.date = $('#date').val();
-    localStorage.distance = $('#distance').val();
     localStorage.racename = $('#racename').val();
 	var date = $('#date').val();
     var distance = $('#distance').val();
@@ -150,8 +149,30 @@ function calcHandicaps() {
 function showStarters() {
 	var racename = document.getElementById('racename').value;
 	calcHandicaps();
-	$('#finallist li:gt(0)').remove();
-    db.transaction(
+	$('#finallist li:gt(1)').remove();
+	// create list of start times
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT DISTINCT(start) FROM predictions WHERE racename = ? order by prediction desc;', 
+                [racename], 
+                function (transaction, result) {
+                    for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+                        var newEntryRow = $('#timeheader').clone();
+                        newEntryRow.removeAttr('id');
+                        newEntryRow.removeAttr('style');
+                        newEntryRow.appendTo('#finallist');
+                        newEntryRow.find('.start').text(row.start+' min  ');
+						newEntryRow.attr('id',row.start);
+					}
+                }, 
+                errorHandler
+            );
+        }
+    );
+	// add in runners per start time
+	db.transaction(
         function(transaction) {
             transaction.executeSql(
                 'SELECT * FROM predictions WHERE racename = ? order by prediction desc;', 
@@ -159,13 +180,12 @@ function showStarters() {
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
-                        var newEntryRow = $('#startlisttemplate').clone();
+                        var newEntryRow = $('#runnername').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
-                        newEntryRow.data('entryId', row.id);
-                        newEntryRow.appendTo('#finallist');
-                        newEntryRow.find('.start').text(row.start+' min  ');
-						newEntryRow.find('.runner').text(row.runner);
+						var listid='#'+row.start;
+                        newEntryRow.appendTo(listid);
+                        newEntryRow.find('.runnertext').text(row.runner);
 					}
                 }, 
                 errorHandler
