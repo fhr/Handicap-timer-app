@@ -25,10 +25,11 @@ $(document).ready(function(){
 
 // delete a race or person entry from DB
 function deleteById(table,id) {
+	var sqlString='DELETE FROM '+table+' WHERE id='+id+';'
 	db.transaction(
         function(transaction) {
-            transaction.executeSql('DELETE FROM ? WHERE id=?;', 
-              [table,id], null, errorHandler);
+            transaction.executeSql(sqlString, 
+              [], null, errorHandler);
         }
     );
 }
@@ -104,7 +105,7 @@ function refreshEntries() {
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
-							deleteById(predictions,clickedEntryId);
+							deleteById('predictions',clickedEntryId);
 							clickedEntry.slideUp();
     });
                     }
