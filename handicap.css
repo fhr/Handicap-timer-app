@@ -28,7 +28,7 @@ li .delete {
 	color: #CCFFFF;
 }
 
-ul .entry {
+li ul .entry {
     margin: 0px 0px 0px 0px;
 }
 
