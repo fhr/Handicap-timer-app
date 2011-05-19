@@ -1,11 +1,12 @@
 // initialise all important functions
-$(document).ready(function(){
+	$(document).ready(function(){
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
 	$('#enterhandicaps form').submit(savePrediction);
 	$('#calcraces').click(raceList);
 	$('#enterhandicaps').click(refreshEntries);
-	$('#enterhandicaps').click(getRunners);
+	$('#newrace').click(getRunners);
+	$('#selectrace').click(getRunners);
 	$("#runner").autocomplete(localStorage.runnerlist.split(","));
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
@@ -235,22 +236,21 @@ function raceList() {
 
 // pull list of all existing runners, to serve handicap entry autocomplete
 function getRunners() {
-	localStorage.runnerlist="Simeon Bennett,Neil Cook";
-	alert("resetting runners to blank");
+	localStorage.runnerlist="";
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
                 'SELECT distinct runner FROM predictions;', [],
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
+						var row = result.rows.item(i);
 						var name=row.runner+",";
-						alert(name);
 						localStorage.runnerlist=localStorage.runnerlist+name;
 						};
-					alert("selecting runners");
                     },
                 errorHandler
 			);
 		}
 	);
+	alert("runner list updated");
 }
