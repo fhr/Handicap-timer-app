@@ -3,8 +3,8 @@
     $('#newrace form').submit(saveRace);
 	$('#newrace form').submit(setTitle);
 	$('#enterhandicaps form').submit(savePrediction);
+	$('#enterhandicaps form').submit(refreshEntries);
 	$('#calcraces').click(raceList);
-	$('#enterhandicaps').click(refreshEntries);
 	$('#newrace').click(getRunners);
 	$('#selectrace').click(getRunners);
 	$("#runner").autocomplete(localStorage.runnerlist.split(","));
@@ -17,7 +17,7 @@
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER, start INTEGER);'
+                'CREATE TABLE IF NOT EXISTS predictions (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, runner TEXT NOT NULL, prediction INTEGER, start TEXT, finish TEXT, position TEXT);'
 			);
 			transaction.executeSql(
                 'CREATE TABLE IF NOT EXISTS races (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, date TEXT, distance REAL);'
@@ -69,7 +69,6 @@ function savePrediction() {
             );
         }
     );
-	refreshEntries();
 }
 
 // set page title to current race name
@@ -252,5 +251,24 @@ function getRunners() {
 			);
 		}
 	);
-	alert("runner list updated");
+}
+
+// enter finish order
+function calcFinishForm() {
+	var racename = localStorage.racename;
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+				'SELECT count (distinct runner) as runner_count FROM predictions WHERE racename=?;', 
+				[racename],
+                function(transaction, result) {
+				localStorage.runner_count=result.rows.item(0)['runner_count'];
+				},
+				errorHandler
+			);
+        }
+	);
+	var runner_count=localStorage.runner_count;
+	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
+	alert('have set innerhtml');
 }
