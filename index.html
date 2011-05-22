@@ -2,8 +2,6 @@
 <html>
     <head>
         <title>Race manager</title>
-        <link type="text/css" rel="stylesheet" media="screen" href="jqtouch/jqtouch.css">
-        <link type="text/css" rel="stylesheet" media="screen" href="themes/jqt/theme.css">
 		<link type="text/css" rel="stylesheet" media="screen" href="handicap.css">
         <script type="text/javascript" src="jqtouch/jquery.js"></script>
         <script type="text/javascript" src="jqtouch/jqtouch.js"></script>
@@ -94,20 +92,7 @@
 			</ul>
 		</div>
 		
-		<div id="enterorder">
-			<div class="toolbar">
-				<h1>Enter finish order</h1>
-				<a class="button back" href="#">Back</a>
-			</div>
-		<div id="startercount">jfkl</div>
-		</div>
-		
-		<div id="viewresults">
-			<div class="toolbar">
-				<h1>Race name results</h1>
-				<a class="button back" href="#">Back</a>
-			</div>
-		</div>
+
 		
 		<div id="viewstarters">
             <div class="toolbar">
@@ -133,6 +118,21 @@
 				<a class="button back" href="#">Back</a>
 			</div>
 
+		</div>
+		
+		<div id="enterorder">
+			<div class="toolbar">
+				<h1>Enter finish order</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		<div id="startercount">jfkl</div>
+			<ul class="edgetoedge" id="finisherlist">
+				<form method="post"><li class="entry" style="display:none" id="finishtemplate">
+					<span class="finishingposition">000</span>
+					<span class="runner"><input type="text" placeholder="Finisher name" name="finisher" id="finisher" autocapitalize="off" autocorrect="off" autocomplete="off" /></span>
+				</li></form>
+			</ul>
+		
 		</div>
 		
         <div id="viewresults">

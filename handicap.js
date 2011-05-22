@@ -274,4 +274,11 @@ function calcFinishForm() {
 	var runner_count=localStorage.runner_count;
 	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
 	alert('have set innerhtml');
+	for (var i=0; i < runner_count; i++) {
+		var newEntryRow = $('#finishtemplate').clone();
+        newEntryRow.removeAttr('id');
+        newEntryRow.removeAttr('style');
+        newEntryRow.appendTo('#finisherlist');
+        newEntryRow.find('.finishingposition').text(i+1);
+		};
 }
