@@ -69,6 +69,9 @@ function savePrediction() {
             );
         }
     );
+	// empty form
+	$('#runner').val("");
+	$('#prediction').val("");
 }
 
 // set page title to current race name
