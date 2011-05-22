@@ -62,9 +62,9 @@
             </div>
 			<ul class="edgetoedge">
                 <li class="arrow"><a href="#enterhandicaps">Enter handicaps</a></li>
-				<li class="arrow"><a href="#viewstarters" onClick="showStarters();return true">View start list</a></li>
+				<li class="arrow"><a href="#viewstarters" onClick="showStarters();finalRaceList();return true">View start list</a></li>
 				<li class="arrow"><a href="#entertimes">Enter finish times</a></li>
-				<li class="arrow"><a href="#enterorder" onClick="calcFinishForm();return true">Enter finish order</a></li>
+				<li class="arrow"><a href="#enterorder" onClick="createFinishPage();return true">Enter finish order</a></li>
 				<li class="arrow"><a href="#viewresults">View results</a></li>
 			</ul>
 		</div>
@@ -129,10 +129,13 @@
 			<ul class="edgetoedge" id="finisherlist">
 				<form method="post"><li class="entry" style="display:none" id="finishtemplate">
 					<span class="finishingposition">000</span>
-					<span class="runner"><input type="text" placeholder="Finisher name" name="finisher" id="finisher" autocapitalize="off" autocorrect="off" autocomplete="off" /></span>
+					<span class="runnerblock">
+					<select placeholder="Finisher name" name="finisher" id="finisher">
+					<option value="0" selected="selected" data-skip="1">Select runner</option>
+					</select>
+					</span>
 				</li></form>
 			</ul>
-		
 		</div>
 		
         <div id="viewresults">
