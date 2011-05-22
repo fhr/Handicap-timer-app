@@ -7,6 +7,7 @@
 	$('#calcraces').click(raceList);
 	$('#newrace').click(getRunners);
 	$('#selectrace').click(getRunners);
+	$('.finisherchoice').change(saveFinishOrder);
 	$("#runner").autocomplete(localStorage.runnerlist.split(","));
 	$('#enterorder').bind('pageAnimationStart', finalRaceList);// this doesn't work, don't know why 
 	// create database to hold data on predicted and actual times
@@ -260,12 +261,15 @@ function getRunners() {
 function createFinishPage(){
 	// create enough rows on page to select finisher for every position
 	var runner_count=localStorage.runnerCount;
+	$('#finisherlist li:gt(0)').remove();
 	for (var i=0; i < runner_count; i++) {
 	var newEntryRow = $('#finishtemplate').clone();
     newEntryRow.removeAttr('id');
+
         newEntryRow.removeAttr('style');
         newEntryRow.appendTo('#finisherlist');
         newEntryRow.find('.finishingposition').text(i+1);
+		newEntryRow.data('positionId', i+1);//give a 'positionId' that can be used later to retrieve values
 		};
 	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
 }
@@ -284,11 +288,11 @@ function finalRaceList() {
 						var row = result.rows.item(i);
 						var name=row.runner;
 						thisRunnerList[i]=name;
-						$('<option />', {value: 1, text: name}).appendTo('#finisher');
+						$('<option />', {value: i, text: name}).appendTo('.finisherchoice');
 						localStorage.runnerCount=thisRunnerList.length;
 						if (i==result.rows.length-1) {
-						createFinishPage();
-						};
+							createFinishPage();
+							};
 						};
                     },
                 errorHandler
@@ -297,3 +301,8 @@ function finalRaceList() {
 	);
 }
 	
+// save selected finish order into database
+function saveFinishOrder() {
+alert('saving finish order element');
+alert($(this+ 'option:selected').text());
+}

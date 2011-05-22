@@ -128,9 +128,9 @@
 		<div id="startercount">jfkl</div>
 			<ul class="edgetoedge" id="finisherlist">
 				<form method="post"><li class="entry" style="display:none" id="finishtemplate">
-					<span class="finishingposition">000</span>
+					<span class="finishingposition"></span>
 					<span class="runnerblock">
-					<select placeholder="Finisher name" name="finisher" id="finisher">
+					<select placeholder="Finisher name" name="finisher" class="finisherchoice" onChange="saveFinishOrder();">
 					<option value="0" selected="selected" data-skip="1">Select runner</option>
 					</select>
 					</span>
