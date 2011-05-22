@@ -8,6 +8,7 @@
 	$('#newrace').click(getRunners);
 	$('#selectrace').click(getRunners);
 	$("#runner").autocomplete(localStorage.runnerlist.split(","));
+	$('#enterorder').bind('pageAnimationStart', finalRaceList);// this doesn't work, don't know why 
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
     var version = '1.0';
@@ -152,7 +153,6 @@ function calcHandicaps() {
 
 // show start list in nice format
 function showStarters() {
-	alert('calling ShowStarters');
 	var racename = document.getElementById('racename').value;
 	calcHandicaps();
 	$('#finallist li:gt(1)').remove();
@@ -257,12 +257,23 @@ function getRunners() {
 	);
 }
 
+function createFinishPage(){
+	// create enough rows on page to select finisher for every position
+	var runner_count=localStorage.runnerCount;
+	for (var i=0; i < runner_count; i++) {
+	var newEntryRow = $('#finishtemplate').clone();
+    newEntryRow.removeAttr('id');
+        newEntryRow.removeAttr('style');
+        newEntryRow.appendTo('#finisherlist');
+        newEntryRow.find('.finishingposition').text(i+1);
+		};
+	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
+}
+
 // enter finish order
 function finalRaceList() {
-	alert('calling finalRaceList');
 	var racename = localStorage.racename;
 	// create list of runners from this race to use for dropdown
-	alert('creating final race list');
 	var thisRunnerList=new Array();
 	db.transaction(
         function(transaction) {
@@ -274,9 +285,10 @@ function finalRaceList() {
 						var name=row.runner;
 						thisRunnerList[i]=name;
 						$('<option />', {value: 1, text: name}).appendTo('#finisher');
-						alert('adding '+name);
 						localStorage.runnerCount=thisRunnerList.length;
-						alert(localStorage.runnerCount+' runners counted');
+						if (i==result.rows.length-1) {
+						createFinishPage();
+						};
 						};
                     },
                 errorHandler
@@ -285,17 +297,3 @@ function finalRaceList() {
 	);
 }
 	
-function createFinishPage(){
-	// create enough rows on page to select finisher for every position
-	alert('creating form list');
-	var runner_count=localStorage.runnerCount;
-	alert(runner_count+' entries');
-	for (var i=0; i < runner_count; i++) {
-	var newEntryRow = $('#finishtemplate').clone();
-    newEntryRow.removeAttr('id');
-        newEntryRow.removeAttr('style');
-        newEntryRow.appendTo('#finisherlist');
-        newEntryRow.find('.finishingposition').text(i+1);
-		};
-	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
-}

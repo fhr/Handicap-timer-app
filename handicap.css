@@ -1,3 +1,16 @@
+select {
+    color: #FFFFFF;
+    background: transparent url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+    border: 0;
+    font: normal 17px "Helvetica Neue", Helvetica;
+    padding: 0;
+    display: inline;
+    margin-left: 0px;
+    width: 100%;
+    -webkit-appearance: textarea;
+}
+
+
 li {
     position: relative;
 }
@@ -28,7 +41,7 @@ li .delete {
 	display: inline;
 }
 
-.runnerblock ul li select{
+.runnerblock{
 	display: inline;
 }
 
@@ -328,8 +341,7 @@ body {
 #jqt ul li input[type="search"],
 #jqt ul li input[type="email"],
 #jqt ul li input[type="url"],
-#jqt ul li textarea,
-#jqt ul li select {
+#jqt ul li textarea {
     color: #FFFFFF;
     background: transparent url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
     border: 0;
