@@ -35,7 +35,6 @@
 			<ul class="edgetoedge" id="existingraces">
                 <li class="entry arrow" style="display:none" id="racelisttemplate">
 					<span class="oldrace">oldracename</span>
-					<span class="delete">Delete</span>
 				</li>
 			</ul>
 		</div>
@@ -48,8 +47,6 @@
             <form method="post">
                 <ul class="rounded">
 					<li><input type="text" placeholder="Race name" name="racename" id="racename" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-                    <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
-                    <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
                     <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
                 </ul>
             </form>
@@ -62,8 +59,7 @@
             </div>
 			<ul class="edgetoedge">
                 <li class="arrow"><a href="#enterhandicaps" onClick="getRunners();refreshEntries()">Enter handicaps</a></li>
-				<li class="arrow"><a href="#viewstarters" onClick="showStarters();finalRaceList();return true">View start list</a></li>
-				<li class="arrow"><a href="#entertimes">Enter finish times</a></li>
+				<li class="arrow"><a href="#viewstarters" onClick="showStarters();finalRaceList();return true">View start list & start race</a></li>
 				<li class="arrow"><a href="#enterorder" onClick="finalRaceList();return true">Enter finish order</a></li>
 				<li class="arrow"><a href="#viewresults">View results</a></li>
 			</ul>
@@ -112,14 +108,6 @@
 			</ul>
         </div>
 		
-		<div id="entertimes">
-			<div class="toolbar">
-				<h1>Enter actual times</h1>
-				<a class="button back" href="#">Back</a>
-			</div>
-
-		</div>
-		
 		<div id="enterorder">
 			<div class="toolbar">
 				<h1>Enter finish order</h1>
@@ -136,6 +124,19 @@
 			</ul>
 		</div>
 		
+		 <div id="deleteraces">
+		    <div class="toolbar">
+                <h1>Select race</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+			<ul class="edgetoedge" id="existingracesfordelete">
+                <li class="entry arrow" style="display:none" id="racelisttemplatefordelete">
+					<span class="oldrace">oldracename</span>
+					<span class="delete">Delete</span>
+				</li>
+			</ul>
+		</div>
+
         <div id="viewresults">
             <div class="toolbar">
                 <h1>View results</h1>
@@ -144,6 +145,8 @@
             <ul class="edgetoedge">
             </ul>
         </div>
+		
+
                
     </body>
 </html>

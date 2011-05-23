@@ -5,9 +5,6 @@
 	$('#enterhandicaps form').submit(savePrediction);
 	$('#enterhandicaps form').submit(refreshEntries);
 	$('#calcraces').click(raceList);
-	$('#newrace').click(getRunners);
-	$('#selectrace').click(getRunners);
-	$('#enterorder').bind('pageAnimationStart', finalRaceList);// this doesn't work, don't know why 
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
     var version = '1.0';
@@ -41,8 +38,8 @@ function deleteById(table,id) {
 // save race form into database
 function saveRace() {
     localStorage.racename = $('#racename').val();
-	var date = $('#date').val();
-    var distance = $('#distance').val();
+	var date = null;
+    var distance = null;
     var racename = $('#racename').val();
 	db.transaction(
         function(transaction) {
@@ -89,7 +86,6 @@ function errorHandler(transaction, error) {
         
 // update handicap entry page to show entries so far
 function refreshEntries() {
-	alert('calling refreshentries');
 	var racename = document.getElementById('racename').value;
 	$('#enteredrunners li:gt(0)').remove();
     db.transaction(
@@ -135,7 +131,6 @@ function calcHandicaps() {
 				errorHandler
 			);
         }      
-        
 	);
 	db.transaction(
         function(transaction) {
@@ -203,6 +198,7 @@ function showStarters() {
 // show list of races 
 function raceList() {
 	$('#existingraces li:gt(0)').remove();
+	$('#existingracesfordelete li:gt(0)').remove();
     db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -222,24 +218,44 @@ function raceList() {
 							setTitle();
 							jQT.goTo('#existingrace');
 						});
-						newEntryRow.find('.delete').click(function(){
+						var newEntryRowB = $('#racelisttemplatefordelete').clone();
+                        newEntryRowB.removeAttr('id');
+                        newEntryRowB.removeAttr('style');
+                        newEntryRowB.data('raceId', row.id);
+                        newEntryRowB.appendTo('#existingracesfordelete');
+                        newEntryRowB.find('.oldrace').text(row.racename);
+						newEntryRowB.find('.delete').click(function(){
 							var clickedRace = $(this).parent();
 							var clickedRaceId = clickedRace.data('raceId');
 							var table='races';
 							deleteById(table,clickedRaceId);
-							clickedRace.slideUp();
+							clickedRace.slideUp();}
+							);
+                    if (i==result.rows.length-1) {
+						var deleterow=$('#racelisttemplate').clone();
+						deleterow.removeAttr('id');
+						deleterow.removeAttr('style');
+						deleterow.removeAttr('class');
+						deleterow.find('.oldrace').text('Delete races');
+						deleterow.appendTo('#existingraces');
+						deleterow.attr('id','deleteraces');
+						deleterow.attr('class','delete');
+						deleterow.find('.oldrace').click(function(){
+							jQT.goTo('#deleteraces');
 						});
-                    }
+							};
+					}
                 }, 
                 errorHandler
             );
         }
     );
+	
 }
 
+                    
 // pull list of all existing runners, to serve handicap entry autocomplete
 function getRunners() {
-	alert('calling getrUNNERS');
 	localStorage.runnerlist="";
 	db.transaction(
         function(transaction) {
@@ -257,7 +273,6 @@ function getRunners() {
 			);
 		}
 	);
-	alert('called autocomplete');
 }
 
 function createFinishPage(){
@@ -281,6 +296,7 @@ function finalRaceList() {
 	var racename = localStorage.racename;
 	// create list of runners from this race to use for dropdown
 	var thisRunnerList=new Array();
+	$('.finisherchoice option:gt(0)').remove();
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
