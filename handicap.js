@@ -238,7 +238,7 @@ function raceList() {
 						deleterow.removeAttr('class');
 						deleterow.find('.oldrace').text('Delete races');
 						deleterow.appendTo('#existingraces');
-						deleterow.attr('id','deleteraces');
+						deleterow.attr('id','deleteracesbutton');
 						deleterow.attr('class','delete');
 						deleterow.find('.oldrace').click(function(){
 							jQT.goTo('#deleteraces');
