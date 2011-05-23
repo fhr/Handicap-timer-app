@@ -264,7 +264,7 @@ function createFinishPage(){
 	for (var i=0; i < runner_count; i++) {
 	var newEntryRow = $('#finishtemplate').clone();
     newEntryRow.removeAttr('id');
-
+	newEntryRow.attr('id','p'+i+1);
         newEntryRow.removeAttr('style');
         newEntryRow.appendTo('#finisherlist');
         newEntryRow.find('.finishingposition').text(i+1);
@@ -304,5 +304,6 @@ function finalRaceList() {
 function saveFinishOrder(elem) {
 alert('saving finish order element');
 alert($(elem).find(':selected').text());
+alert($(elem).parent().attr('id'));
 }
 
