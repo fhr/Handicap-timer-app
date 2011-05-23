@@ -264,7 +264,7 @@ function createFinishPage(){
 	for (var i=0; i < runner_count; i++) {
 	var newEntryRow = $('#finishtemplate').clone();
     newEntryRow.removeAttr('id');
-	newEntryRow.attr('id','p'+i+1);
+	newEntryRow.attr('id','p'+(i+1));
         newEntryRow.removeAttr('style');
         newEntryRow.appendTo('#finisherlist');
         newEntryRow.find('.finishingposition').text(i+1);
@@ -302,8 +302,17 @@ function finalRaceList() {
 	
 // save selected finish order into database
 function saveFinishOrder(elem) {
-alert('saving finish order element');
-alert($(elem).find(':selected').text());
-alert($(elem).parent().attr('id'));
+var runner=$(elem).find(':selected').text();
+var position=$(elem).parent().attr('id').substring(1);
+var racename = localStorage.racename;
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'update predictions set position=? where runner=? and racename = ?;', [position,runner,racename],
+                function (transaction, result) {},
+                errorHandler
+			);
+		}
+	);
 }
 
