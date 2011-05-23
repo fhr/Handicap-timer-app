@@ -7,7 +7,6 @@
 	$('#calcraces').click(raceList);
 	$('#newrace').click(getRunners);
 	$('#selectrace').click(getRunners);
-	$('.finisherchoice').change(saveFinishOrder);
 	$("#runner").autocomplete(localStorage.runnerlist.split(","));
 	$('#enterorder').bind('pageAnimationStart', finalRaceList);// this doesn't work, don't know why 
 	// create database to hold data on predicted and actual times
@@ -302,7 +301,8 @@ function finalRaceList() {
 }
 	
 // save selected finish order into database
-function saveFinishOrder() {
+function saveFinishOrder(elem) {
 alert('saving finish order element');
-alert($(this+ 'option:selected').text());
+alert($(elem).find(':selected').text());
 }
+
