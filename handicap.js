@@ -7,7 +7,6 @@
 	$('#calcraces').click(raceList);
 	$('#newrace').click(getRunners);
 	$('#selectrace').click(getRunners);
-	$("#runner").autocomplete(localStorage.runnerlist.split(","));
 	$('#enterorder').bind('pageAnimationStart', finalRaceList);// this doesn't work, don't know why 
 	// create database to hold data on predicted and actual times
 	var shortName = 'Handicaps';
@@ -90,6 +89,7 @@ function errorHandler(transaction, error) {
         
 // update handicap entry page to show entries so far
 function refreshEntries() {
+	alert('calling refreshentries');
 	var racename = document.getElementById('racename').value;
 	$('#enteredrunners li:gt(0)').remove();
     db.transaction(
@@ -239,6 +239,7 @@ function raceList() {
 
 // pull list of all existing runners, to serve handicap entry autocomplete
 function getRunners() {
+	alert('calling getrUNNERS');
 	localStorage.runnerlist="";
 	db.transaction(
         function(transaction) {
@@ -249,12 +250,14 @@ function getRunners() {
 						var row = result.rows.item(i);
 						var name=row.runner+",";
 						localStorage.runnerlist=localStorage.runnerlist+name;
+						$("#runner").autocomplete(localStorage.runnerlist.split(","));
 						};
                     },
                 errorHandler
 			);
 		}
 	);
+	alert('called autocomplete');
 }
 
 function createFinishPage(){
