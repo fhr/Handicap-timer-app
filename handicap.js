@@ -348,18 +348,18 @@ function DNFupdate() {
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? order by runner;', 
+                'SELECT * FROM predictions WHERE racename = ? and position isnull order by runner;', 
                 [racename], 
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
+						alert(i+' '+result.rows.length);
                         var newEntryRow = $('#dnftemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
                         newEntryRow.data('entryId', row.id);
                         newEntryRow.appendTo('#dnflist');
                         newEntryRow.find('.runner').text(row.runner);
-						alert('adding '+text(row.runner));
 						if (i==result.rows.length-1) {jQT.goTo('#dnfpage');};
 						};
                     }, 
