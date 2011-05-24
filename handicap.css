@@ -61,3 +61,8 @@ li ul .entry {
 ul li.entry {
     padding: 0px 0px 0px 0px;
 }
+
+body {
+    background: #000;
+    color: #ddd;
+}
