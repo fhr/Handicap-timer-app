@@ -122,6 +122,8 @@
 					</select>
 				</li></form>
 			</ul>
+			<ul class="edgetoedge">
+			<li class="arrow" id="entries_done"><a href="#dnfpage" onClick="DNFupdate();return true">Done entering finishers</a></li></ul>
 		</div>
 		
 		<div id="deleteraces">
@@ -133,6 +135,18 @@
                 <li class="entry arrow" style="display:none" id="racelisttemplatefordelete">
 					<span class="oldrace">oldracename</span>
 					<span class="delete">Delete</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="dnfpage">
+		    <div class="toolbar">
+                <h1>Review DNFs</h1>
+                <a class="button back" href="#" onClick="raceList()">Back</a>
+            </div>
+			<ul class="edgetoedge" id="dnflist">
+				<li class="entry" style="display:none" id="dnftemplate">
+					<span class="runner">runner</span>
 				</li>
 			</ul>
 		</div>
