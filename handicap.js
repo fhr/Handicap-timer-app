@@ -58,17 +58,22 @@ function savePrediction() {
 	var racename = document.getElementById('racename').value;
     var runner = $('#runner').val();
     var prediction = $('#prediction').val();
-    db.transaction(
-        function(transaction) {
-            transaction.executeSql(
-                'INSERT INTO predictions (racename, runner, prediction, start) VALUES (?, ?, ?,?);', 
-                [racename, runner, prediction,0]
-            );
-        }
-    );
-	// empty form
-	$('#runner').val("");
-	$('#prediction').val("");
+	if (runner=="") {
+		alert('No runner name! Please give this person a name.');
+		} else {
+			if (prediction=="") {alert('No time prediction! Please add a time.');} else {
+				db.transaction(
+					function(transaction) {
+						transaction.executeSql(
+						'INSERT INTO predictions (racename, runner, prediction, start) VALUES (?, ?, ?,?);', 
+						[racename, runner, prediction,0]
+						);
+					}
+				);
+				// empty form
+				$('#runner').val("");
+				$('#prediction').val("");
+			}};
 }
 
 // set page title to current race name

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Race manager</title>
+		<link type="text/css" rel="stylesheet" media="screen" href="handicap.css">
+        <script type="text/javascript" src="jqtouch/jquery.js"></script>
+        <script type="text/javascript" src="jqtouch/jqtouch.js"></script>
+		<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.bgiframe.min.js"></script>
+		<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/lib/jquery.dimensions.js"></script>
+		<script type="text/javascript" src="http://dev.jquery.com/view/trunk/plugins/autocomplete/jquery.autocomplete.js"></script>
+		<script type="text/javascript" src="handicap.js"></script>
+        <script type="text/javascript">
+            var jQT = $.jQTouch({
+                icon: 'vph.png'
+            });
+        </script>
+    </head>
+	
+    <body>
+        <div id="home">
+            <div class="toolbar">
+                <h1>Race manager</h1>
+            </div>
+			<ul class="edgetoedge">
+				<li class="arrow"><a href="#newrace">Start new race</a></li>
+				<li class="arrow"><a href="#selectrace" id="calcraces">Manage existing races</a></li>
+			</ul>
+		</div>
+		
+		<div id="selectrace">
+		    <div class="toolbar">
+                <h1>Select race</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+			<ul class="edgetoedge" id="existingraces">
+                <li class="entry arrow" style="display:none" id="racelisttemplate">
+					<span class="oldrace">oldracename</span>
+					<span class="delete">Delete</span>
+				</li>
+			</ul>
+		</div>
+		
+		<div id="newrace">
+            <div class="toolbar">
+                <h1>New race</h1>
+                <a class="button cancel" href="#">Cancel</a>
+            </div>
+            <form method="post">
+                <ul class="rounded">
+					<li><input type="text" placeholder="Race name" name="racename" id="racename" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="date" placeholder="Date" name="date" id="date" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="numeric" placeholder="Distance" name="distance" id="distance" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
+                </ul>
+            </form>
+        </div>
+		
+		<div id="existingrace">
+		    <div class="toolbar">
+			<h1><div id=existingracetitle></div></h1>			
+                <a class="button back" href="#">Back</a>
+            </div>
+			<ul class="edgetoedge">
+                <li class="arrow"><a href="#enterhandicaps">Enter handicaps</a></li>
+				<li class="arrow"><a href="#viewstarters" onClick="showStarters();finalRaceList();return true">View start list</a></li>
+				<li class="arrow"><a href="#entertimes">Enter finish times</a></li>
+				<li class="arrow"><a href="#enterorder" onClick="finalRaceList();return true">Enter finish order</a></li>
+				<li class="arrow"><a href="#viewresults">View results</a></li>
+			</ul>
+		</div>
+				
+        
+			
+		<div id="enterhandicaps">
+			<div class="toolbar">
+			<h1><div id=handicaptitle></div></h1>		
+				<a class="button back" href="#">Back</a>
+			</div>
+			<form method="post">
+                <ul class="rounded">
+					<li><input type="text" placeholder="Runner" name="runner" id="runner" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="numeric" placeholder="Predicted time" name="prediction" id="prediction" autocapitalize="off" autocorrect="off" autocomplete="off" /></li>
+                    <li><input type="submit" class="submit" name="waction" value="Save Entry" /></li>
+                </ul>
+            </form>
+			<ul class="edgetoedge" id="enteredrunners">
+				<li class="entry" style="display:none" id="predictiontemplate">
+					<span class="runner">runner</span>
+					<span class="prediction">000</span>
+					<span class="delete">Delete</span>
+				</li>
+			</ul>
+		</div>
+		
+
+		
+		<div id="viewstarters">
+            <div class="toolbar">
+                <h1>Start list</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+			Set runners off at the times shown.
+			<ul class="edgetoedge" id="finallist">
+				<li class="entry" style="display:none" id="timeheader">
+					<span class="start">time goes here</span>
+				<ul class="entry">
+					<li class="entry" id="runnername" style="display:none">
+						<span class="runnertext">runner</span>
+					</li>	
+				</ul>
+				</li>
+			</ul>
+        </div>
+		
+		<div id="entertimes">
+			<div class="toolbar">
+				<h1>Enter actual times</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+
+		</div>
+		
+		<div id="enterorder">
+			<div class="toolbar">
+				<h1>Enter finish order</h1>
+				<a class="button back" href="#">Back</a>
+			</div>
+		<div id="startercount">jfkl</div>
+			<ul class="edgetoedge" id="finisherlist">
+				<form method="post"><li class="entry" style="display:none" id="finishtemplate">
+					<span class="finishingposition"></span>
+					<select placeholder="Finisher name" name="finisher" class="finisherchoice" onChange="saveFinishOrder(this);">
+					<option value="0" selected="selected" data-skip="1">Select runner</option>
+					</select>
+				</li></form>
+			</ul>
+		</div>
+		
+        <div id="viewresults">
+            <div class="toolbar">
+                <h1>View results</h1>
+                <a class="button back" href="#">Back</a>
+            </div>
+            <ul class="edgetoedge">
+            </ul>
+        </div>
+               
+    </body>
+</html>
+
