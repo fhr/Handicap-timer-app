@@ -153,7 +153,7 @@ function calcHandicaps() {
 function showStarters() {
 	var racename = localStorage.racename;
 	calcHandicaps();
-	$('#finallist h2:gt(1)').remove();
+	$('#finallist h2:gt(0)').remove();
 	// create list of start times
 	db.transaction(
         function(transaction) {
