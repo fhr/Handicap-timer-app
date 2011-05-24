@@ -333,7 +333,9 @@ var racename = localStorage.racename;
 
 // update entries on DNF page
 function DNFupdate() {
+	alert('dnfupdate');
 	var racename=localStorage.racename;
+	alert(racename);
 	$('#dnflist li:gt(0)').remove();
     db.transaction(
         function(transaction) {
@@ -341,6 +343,8 @@ function DNFupdate() {
                 'SELECT * FROM predictions WHERE racename = ? and position isnull order by runner;', 
                 [racename], 
                 function (transaction, result) {
+					if (result.rows.length==0){alert('No DNFs!');
+					jQT.goTo('#viewresults');} else {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
                         var newEntryRow = $('#dnftemplate').clone();
@@ -349,9 +353,12 @@ function DNFupdate() {
                         newEntryRow.data('entryId', row.id);
                         newEntryRow.appendTo('#dnflist');
                         newEntryRow.find('.runner').text(row.runner);
-						if (i==result.rows.length-1) {jQT.goTo('#dnfpage');};
+						alert(i+result.rows.length);
+						if (i==result.rows.length-1) {
+						alert('going to page');
+						jQT.goTo('#dnfpage');};
 						};
-                    }, 
+                    }}, 
                 errorHandler
             );
         }
