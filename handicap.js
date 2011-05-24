@@ -342,7 +342,6 @@ var racename = localStorage.racename;
 
 // update entries on DNF page
 function DNFupdate() {
-	alert('start dnfupdate');
 	var racename=localStorage.racename;
 	$('#dnflist li:gt(0)').remove();
     db.transaction(
@@ -353,7 +352,6 @@ function DNFupdate() {
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
-						alert(i+' '+result.rows.length);
                         var newEntryRow = $('#dnftemplate').clone();
                         newEntryRow.removeAttr('id');
                         newEntryRow.removeAttr('style');
