@@ -204,6 +204,7 @@ function showStarters() {
 function raceList() {
 	$('#existingraces li:gt(0)').remove();
 	$('#existingracesfordelete li:gt(0)').remove();
+	$('#deleteracesbutton').remove();
     db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -237,19 +238,9 @@ function raceList() {
 							clickedRace.slideUp();}
 							);
                     if (i==result.rows.length-1) {
-						var deleterow=$('#racelisttemplate').clone();
-						deleterow.removeAttr('id');
-						deleterow.removeAttr('style');
-						deleterow.removeAttr('class');
-						deleterow.find('.oldrace').text('Delete races');
-						deleterow.appendTo('#existingraces');
-						deleterow.attr('id','deleteracesbutton');
-						deleterow.attr('class','delete');
-						deleterow.find('.oldrace').click(function(){
-							jQT.goTo('#deleteraces');
-						});
+						$('<ul class="individual" id="deleteracesbutton"><li onClick="jQT.goTo(\'#deleteraces\')">Delete races</li></ul>').appendTo('#selectrace');
+						};
 							};
-					}
                 }, 
                 errorHandler
             );

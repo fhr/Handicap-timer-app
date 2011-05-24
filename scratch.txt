@@ -1,28 +1,10 @@
-
-time // name // expected race
-
-function calcHandicaps() {
-	var racename = document.getElementById('racename').value;
-	db.transaction(
-        function(transaction) {
-            transaction.executeSql('select max(prediction) from predictions where racename=?;', [racename],
-                function(transaction, result) {
-					var maxtime=19}
-            )       
-        };
-	);
-	
-	
-	
-	
-	db.transaction(
-		function(transaction) {
-			transaction.executeSql(
-				'update predictions set start=? where racename = ?;',
-				[maxtime,racename]
-			);
-		}
-	);
-}
-
-				'CREATE TABLE IF NOT EXISTS races (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, date TEXT, distance REAL);'
+						var deleterow=$('#racelisttemplate').clone();
+						deleterow.removeAttr('id');
+						deleterow.removeAttr('style');
+						deleterow.removeAttr('class');
+						deleterow.find('.oldrace').text('Delete races');
+						deleterow.appendTo('#existingraces');
+						deleterow.attr('id','deleteracesbutton');
+						deleterow.attr('class','individual');
+						deleterow.find('.oldrace').click(function(){
+							jQT.goTo('#deleteraces');
