@@ -56,7 +56,7 @@
 		
 		<div id="existingrace">
 		    <div class="toolbar">
-			<h1><div id=existingracetitle></div></h1>			
+			<h1><div id=existingracetitle></div>Manage race</h1>			
                 <a class="button back" href="#">Back</a>
             </div>
 			<ul class="edgetoedge">
@@ -65,13 +65,14 @@
 				<li class="arrow"><a href="#enterorder" onClick="finalRaceList();return true">Enter finish order</a></li>
 				<li class="arrow"><a href="#viewresults">View results</a></li>
 			</ul>
+			<div class="info">Choose a race to manage</div>
 		</div>
 				
         
 			
 		<div id="enterhandicaps">
 			<div class="toolbar">
-			<h1><div id=handicaptitle></div></h1>		
+			<h1><div id=handicaptitle>Predictions</div></h1>		
 				<a class="button back" href="#">Back</a>
 			</div>
 			<form method="post">
@@ -88,6 +89,7 @@
 					<span class="delete">Delete</span>
 				</li>
 			</ul>
+						<div class="info">Choose a race to manage</div>
 		</div>
 		
 
@@ -108,14 +110,15 @@
 				</ul>
 				</li>
 			</ul>
+						<div class="info">Choose a race to manage</div>
         </div>
 		
 		<div id="enterorder">
 			<div class="toolbar">
-				<h1>Enter finish order</h1>
+				<h1>Finish order</h1>
 				<a class="button back" href="#">Back</a>
 			</div>
-		<div id="startercount">jfkl</div>
+		<div id="startercount">Nobody entered yet</div>
 			<ul class="edgetoedge" id="finisherlist">
 				<form method="post"><li class="entry" style="display:none" id="finishtemplate">
 					<span class="finishingposition"></span>
@@ -126,6 +129,7 @@
 			</ul>
 			<ul class="individual">
 			<li class="arrow" id="entries_done" onClick="DNFupdate()">Done entering finishers</li></ul>
+						<div class="info">Choose a race to manage</div>
 		</div>
 		
 		<div id="deleteraces">
@@ -139,6 +143,7 @@
 					<span class="delete">Delete</span>
 				</li>
 			</ul>
+			
 		</div>
 		
 		<div id="dnfpage">
@@ -155,7 +160,7 @@
 			<li onClick="jQT.goTo('#viewresults');">Save</li>
 			<li onClick="jQT.goTo('#enterorder');">Change</li>
 			</ul>
-
+			<div class="info">Choose a race to manage</div>
 		</div>
 		
         <div id="viewresults">
@@ -165,6 +170,7 @@
             </div>
             <ul class="edgetoedge">
             </ul>
+						<div class="info">Choose a race to manage</div>
         </div>
 		
 

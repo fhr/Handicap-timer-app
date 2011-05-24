@@ -78,9 +78,7 @@ function savePrediction() {
 
 // set page title to current race name
 function setTitle() {
-	$('#racename').val(localStorage.racename);
-	document.getElementById('existingracetitle').innerHTML = document.getElementById('racename').value;
-	document.getElementById('handicaptitle').innerHTML = document.getElementById('racename').value + ' predictions';
+	$('.info').html('Managing race: '+localStorage.racename);
 }
 
 // handles SQL errors
