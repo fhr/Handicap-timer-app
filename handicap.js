@@ -55,7 +55,7 @@ function saveRace() {
 
 // save an individual time prediction
 function savePrediction() {
-	var racename = document.getElementById('racename').value;
+	var racename = localStorage.racename;
     var runner = $('#runner').val();
     var prediction = $('#prediction').val();
 	if (runner=="") {
@@ -89,7 +89,7 @@ function errorHandler(transaction, error) {
         
 // update handicap entry page to show entries so far
 function refreshEntries() {
-	var racename = document.getElementById('racename').value;
+	var racename = localStorage.racename;
 	$('#enteredrunners li:gt(0)').remove();
     db.transaction(
         function(transaction) {
@@ -151,7 +151,7 @@ function calcHandicaps() {
 
 // show start list in nice format
 function showStarters() {
-	var racename = document.getElementById('racename').value;
+	var racename = localStorage.racename;
 	calcHandicaps();
 	$('#finallist li:gt(1)').remove();
 	// create list of start times
@@ -251,6 +251,7 @@ function raceList() {
 // pull list of all existing runners, to serve handicap entry autocomplete
 function getRunners() {
 	localStorage.runnerlist="";
+	alert('getrunners');
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -260,6 +261,7 @@ function getRunners() {
 						var row = result.rows.item(i);
 						var name=row.runner+",";
 						localStorage.runnerlist=localStorage.runnerlist+name;
+						alert('updating autocomplete '+i);
 						$("#runner").autocomplete(localStorage.runnerlist.split(","));
 						};
                     },
