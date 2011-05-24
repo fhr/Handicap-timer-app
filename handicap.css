@@ -31,11 +31,6 @@ li .delete {
     -webkit-border-image: url(themes/jqt/img/button.png) 0 5 0 5;
 }   
 
-.runner {
-	color: #CCFFFF;
-	display: inline;
-}
-
 .finisher input[type="text"] {
 	color: #CCFFFF;
 	display: inline;
@@ -49,20 +44,4 @@ ul li select option {
 	color: black;
 }
 
-.runnertext {
-	color: #CCFFFF;
-	font-weight: normal;
-}
 
-li ul .entry {
-    margin: 0px 0px 0px 0px;
-}
-
-ul li.entry {
-    padding: 0px 0px 0px 0px;
-}
-
-body {
-    background: #000;
-    color: #ddd;
-}
