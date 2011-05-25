@@ -94,7 +94,7 @@ function refreshEntries() {
     db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'SELECT * FROM predictions WHERE racename = ? order by prediction;', 
+                'SELECT * FROM predictions WHERE racename = ? order by runner;', 
                 [racename], 
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
@@ -105,7 +105,7 @@ function refreshEntries() {
                         newEntryRow.data('entryId', row.id);
                         newEntryRow.appendTo('#enteredrunners');
                         newEntryRow.find('.runner').text(row.runner);
-                        newEntryRow.find('.prediction').text(row.prediction);
+                        newEntryRow.find('.prediction').text('('+row.prediction+' min)');
 						newEntryRow.find('.delete').click(function(){
 							var clickedEntry = $(this).parent();
 							var clickedEntryId = clickedEntry.data('entryId');
