@@ -10,10 +10,19 @@ select {
     -webkit-appearance: textarea;
 }
 
+#jqt ul li input [type="text"] #runner {
+	color: white;
+	}
+
+#jqt ul.individual li {
+	color: white;
+	}
+
 #jqt ul li .finisherchoice {
     display: inline;
-	width: 97%;
+	width: 90%;
 	margin-left: 5px;
+	color: white;
 }
 
 li {
