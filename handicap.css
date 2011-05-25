@@ -10,6 +10,11 @@ select {
     -webkit-appearance: textarea;
 }
 
+#jqt ul li .finisherchoice {
+    display: inline;
+	width: 97%;
+	margin-left: 5px;
+}
 
 li {
     position: relative;
