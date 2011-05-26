@@ -111,7 +111,9 @@ function refreshEntries() {
 							var clickedEntryId = clickedEntry.data('entryId');
 							deleteById('predictions',clickedEntryId);
 							clickedEntry.slideUp();
+					
     });
+		if (i==result.rows.length-1){calcHandicaps();};
                     }
                 }, 
                 errorHandler
@@ -122,6 +124,7 @@ function refreshEntries() {
 
 // calculate handicaps for a race once all expected times are entered
 function calcHandicaps() {
+	alert('calculating handicaps');
 	var racename = localStorage.racename;
 	db.transaction(
         function(transaction) {
@@ -135,6 +138,7 @@ function calcHandicaps() {
 			);
         }      
 	);
+	alert(localStorage.maxtime);
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -272,6 +276,7 @@ function getRunners() {
 }
 
 function createFinishPage(){
+	alert('creating finish page');
 	// create enough rows on page to select finisher for every position
 	var runner_count=localStorage.runnerCount;
 	$('#finisherlist li:gt(0)').remove();
@@ -364,4 +369,22 @@ function DNFupdate() {
         }
     );
 	
+}
+
+function fixFinishPage(){
+	var racename=localStorage.racename;
+    db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? and position is not null order by runner;', 
+                [racename], 
+                function (transaction, result) {
+					if (result.rows.length==0){
+					alert('no positions selected yet! starting fresh');
+					createFinishPage();};
+					},
+                errorHandler
+            );
+        }
+    );
 }
