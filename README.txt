@@ -1,16 +1,5 @@
-index.html                                  // Main page; this is the page to load in your browser
-jqtouch/jqtouch.css                         // Low level jqtouch style settings referenced in index.html
-jqtouch/jqtouch.js                          // jQTouch library referenced in index.html
-jqtouch/jquery.js                           // jQuery library referenced in index.html
-themes/jqt/img/back_button.png              // Back button image referenced in themes/jqt/theme.css
-themes/jqt/img/back_button_clicked.png      // Clicked back button image referenced in themes/jqt/theme.css
-themes/jqt/img/button.png                   // Button image referenced in themes/jqt/theme.css
-themes/jqt/img/button_clicked.png           // Clicked button image referenced in themes/jqt/theme.css
-themes/jqt/img/chevron.png                  // Right arrow image referenced in themes/jqt/theme.css
-themes/jqt/img/toolbar.png                  // Toolbar background image referenced in themes/jqt/theme.css
-themes/jqt/theme.css                        // Theme-specific CSS referenced in index.html
-
-NOTE: The files in the jqtouch and themes directories represent a partial install of jQTouch intended for educational purposes. For production work, you should download the latest version of from github:
-
-http://github.com/senchalabs/jQTouch
-
+This project is eventually going to be a phone app for managing handicap road races. 
+Customised for my local running club (vphthac.org.uk) but should work for more use cases as well. 
+A handicap race is where you set people off at different times based on speed estimates, with the aim being that if they all estimate accurately then they would all *finish* at the same time. 
+I'm writing the base code in HTML5 and Jquery, closely following the examples in this book http://ofps.oreilly.com/titles/9781449383268/
+Right now it's html only but will need soon to port to a phone so that it can incorporate timing elements and also sync to a DB for data storage and for multi-device usage on a single race. 
