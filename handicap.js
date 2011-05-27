@@ -265,8 +265,7 @@ function getRunners() {
 						var row = result.rows.item(i);
 						var name=row.runner+",";
 						localStorage.runnerlist=localStorage.runnerlist+name;
-						alert('updating autocomplete '+i);
-						$("#runner").autocomplete(localStorage.runnerlist.split(","));
+						$("#runner").autocomplete({source:localStorage.runnerlist.split(',')});
 						};
                     },
                 errorHandler
