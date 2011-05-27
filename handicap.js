@@ -124,7 +124,6 @@ function refreshEntries() {
 
 // calculate handicaps for a race once all expected times are entered
 function calcHandicaps() {
-	alert('calculating handicaps');
 	var racename = localStorage.racename;
 	db.transaction(
         function(transaction) {
@@ -138,7 +137,6 @@ function calcHandicaps() {
 			);
         }      
 	);
-	alert(localStorage.maxtime);
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -255,7 +253,6 @@ function raceList() {
 // pull list of all existing runners, to serve handicap entry autocomplete
 function getRunners() {
 	localStorage.runnerlist="";
-	alert('getrunners');
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -275,7 +272,6 @@ function getRunners() {
 }
 
 function createFinishPage(){
-	alert('creating finish page');
 	// create enough rows on page to select finisher for every position
 	var runner_count=localStorage.runnerCount;
 	$('#finisherlist li:gt(0)').remove();
@@ -337,9 +333,7 @@ var racename = localStorage.racename;
 
 // update entries on DNF page
 function DNFupdate() {
-	alert('dnfupdate');
 	var racename=localStorage.racename;
-	alert(racename);
 	$('#dnflist li:gt(0)').remove();
     db.transaction(
         function(transaction) {
@@ -357,9 +351,7 @@ function DNFupdate() {
                         newEntryRow.data('entryId', row.id);
                         newEntryRow.appendTo('#dnflist');
                         newEntryRow.find('.runner').text(row.runner);
-						alert(i+result.rows.length);
 						if (i==result.rows.length-1) {
-						alert('going to page');
 						jQT.goTo('#dnfpage');};
 						};
                     }}, 
