@@ -19,6 +19,9 @@
 			transaction.executeSql(
                 'CREATE TABLE IF NOT EXISTS races (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,racename TEXT NOT NULL, date TEXT, distance REAL);'
 			);
+			transaction.executeSql(
+                'CREATE TABLE IF NOT EXISTS autocompletion (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,runner TEXT NOT NULL, value TEXT,racename TEXT NOT NULL);'
+			);
         }
     );
 }
@@ -140,7 +143,8 @@ function calcHandicaps() {
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
-				'update predictions set start=?-prediction where racename = ?;', 
+				'INSERT INTO races (racename, date, distance) VALUES (?, ?, ?);', 
+                [racename, date, distance], 
 				[localStorage.maxtime,racename],
                 function(transaction, result) {
 				},
@@ -285,7 +289,21 @@ function createFinishPage(){
 		newEntryRow.data('positionId', i+1);//give a 'positionId' that can be used later to retrieve values
 		};
 	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
-}
+	// remember assigned values for options so that we can retrieve later
+	db.transaction(
+        function(transaction) {
+				transaction.executeSql(
+                'delete from autocompletion where runner=? and racename = ?;', [runner,racename],
+                function (transaction, result) {},
+                errorHandler
+			);
+			transaction.executeSql(
+                'INSERT INTO autocompletion (runner, value, racename) VALUES (?, ?, ?);', [runner,value,racename],
+                function (transaction, result) {},
+                errorHandler);
+		}
+	);
+	}
 
 // enter finish order
 function finalRaceList() {
@@ -302,7 +320,7 @@ function finalRaceList() {
 						var row = result.rows.item(i);
 						var name=row.runner;
 						thisRunnerList[i]=name;
-						$('<option />', {value: i, text: name}).appendTo('.finisherchoice');
+						$('<option />', {value: i+1, text: name}).appendTo('.finisherchoice');
 						localStorage.runnerCount=thisRunnerList.length;
 						if (i==result.rows.length-1) {
 							createFinishPage();
@@ -319,6 +337,7 @@ function finalRaceList() {
 function saveFinishOrder(elem) {
 var runner=$(elem).find(':selected').text();
 var position=$(elem).parent().attr('id').substring(1);
+var value=$(elem).find(':selected').val();
 var racename = localStorage.racename;
 	db.transaction(
         function(transaction) {
@@ -379,3 +398,24 @@ function fixFinishPage(){
         }
     );
 }
+
+function refreshFinishPage() {
+	var racename=localStorage.racename;
+	db.transaction(
+        function(transaction) {
+            transaction.executeSql(
+                'SELECT * FROM predictions WHERE racename = ? and position is not null order by runner;', 
+                [racename], 
+                function (transaction, result) {
+					if (result.rows.length==0){alert('no positions selected yet! starting fresh');};
+					// function here to find and select finishing positions correctly
+					for (var i=0; i < result.rows.length; i++) {
+                        var row = result.rows.item(i);
+						}; 
+					},
+                errorHandler
+            );
+        }
+    );
+}
+
