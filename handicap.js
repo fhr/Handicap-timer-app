@@ -289,20 +289,6 @@ function createFinishPage(){
 		newEntryRow.data('positionId', i+1);//give a 'positionId' that can be used later to retrieve values
 		};
 	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
-	// remember assigned values for options so that we can retrieve later
-	db.transaction(
-        function(transaction) {
-				transaction.executeSql(
-                'delete from autocompletion where runner=? and racename = ?;', [runner,racename],
-                function (transaction, result) {},
-                errorHandler
-			);
-			transaction.executeSql(
-                'INSERT INTO autocompletion (runner, value, racename) VALUES (?, ?, ?);', [runner,value,racename],
-                function (transaction, result) {},
-                errorHandler);
-		}
-	);
 	}
 
 // enter finish order
@@ -310,7 +296,15 @@ function finalRaceList() {
 	var racename = localStorage.racename;
 	// create list of runners from this race to use for dropdown
 	var thisRunnerList=new Array();
+	var racename=localStorage.racename;
 	$('.finisherchoice option:gt(0)').remove();
+	db.transaction(
+		function(transaction) {
+			transaction.executeSql (
+				'delete from autocompletion;'
+			);
+		}
+	);
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
@@ -319,9 +313,19 @@ function finalRaceList() {
                     for (var i=0; i < result.rows.length; i++) {
 						var row = result.rows.item(i);
 						var name=row.runner;
+						var value=i+1;
+						alert('adding '+i+name);
 						thisRunnerList[i]=name;
 						$('<option />', {value: i+1, text: name}).appendTo('.finisherchoice');
 						localStorage.runnerCount=thisRunnerList.length;
+						db.transaction(
+							function(transaction,result) {
+								transaction.executeSql(
+									'INSERT INTO autocompletion (runner, value, racename) VALUES (?, ?, ?);', ['test',i+1,racename],
+									function (transaction, result) {},
+									errorHandler);
+							}
+						);
 						if (i==result.rows.length-1) {
 							createFinishPage();
 							};
