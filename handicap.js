@@ -289,6 +289,7 @@ function createFinishPage(){
 		newEntryRow.data('positionId', i+1);//give a 'positionId' that can be used later to retrieve values
 		};
 	document.getElementById('startercount').innerHTML = 'This race had '+runner_count+' starters.';
+	refreshFinishPage();
 	}
 
 // enter finish order
@@ -308,24 +309,15 @@ function finalRaceList() {
 	db.transaction(
         function(transaction) {
             transaction.executeSql(
-                'SELECT distinct runner FROM predictions where racename=? order by runner;', [racename],
+                'SELECT * FROM predictions where racename=? order by runner;', [racename],
                 function (transaction, result) {
                     for (var i=0; i < result.rows.length; i++) {
 						var row = result.rows.item(i);
 						var name=row.runner;
-						var value=i+1;
-						alert('adding '+i+name);
+						var value=row.id;
 						thisRunnerList[i]=name;
-						$('<option />', {value: i+1, text: name}).appendTo('.finisherchoice');
+						$('<option />', {value: row.id, text: name}).appendTo('.finisherchoice');
 						localStorage.runnerCount=thisRunnerList.length;
-						db.transaction(
-							function(transaction,result) {
-								transaction.executeSql(
-									'INSERT INTO autocompletion (runner, value, racename) VALUES (?, ?, ?);', ['test',i+1,racename],
-									function (transaction, result) {},
-									errorHandler);
-							}
-						);
 						if (i==result.rows.length-1) {
 							createFinishPage();
 							};
@@ -415,6 +407,10 @@ function refreshFinishPage() {
 					// function here to find and select finishing positions correctly
 					for (var i=0; i < result.rows.length; i++) {
                         var row = result.rows.item(i);
+						var pos = row.position;
+						var id_val= row.id;
+						var selectid='#p'+pos+' select option[value=\''+id_val+'\']';
+						$(selectid).attr("selected","selected");
 						}; 
 					},
                 errorHandler
