@@ -1,0 +1,72 @@
+h2 span {
+color: #F0FFFF;
+}
+
+#jqt ul li input[type="text"]#runner {
+color: white;
+}
+
+select {
+    color: #FFFFFF;
+    background: transparent url('data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==');
+    border: 0;
+    font: normal 17px "Helvetica Neue", Helvetica;
+    padding: 0;
+    display: inline;
+    margin-left: 0px;
+    width: 100%;
+    -webkit-appearance: textarea;
+}
+
+#jqt ul li input [type="text"] #runner {
+	color: white;
+	}
+
+#jqt ul.individual li {
+	color: white;
+	}
+
+#jqt ul li .finisherchoice {
+    display: inline;
+	width: 90%;
+	margin-left: 5px;
+	color: white;
+}
+
+li {
+    position: relative;
+}
+
+li span {
+    color: #FFFFFF;
+    text-shadow: 0 1px 2px rgba(0,0,0,.7);
+}
+
+li .delete {
+    position: absolute;
+    top: 5px;
+    right: 6px;
+    font-size: 12px;
+    line-height: 30px;
+    padding: 0 3px;
+    border-width: 0 5px;
+    -webkit-border-image: url(themes/jqt/img/button.png) 0 5 0 5;
+}   
+
+.finisher input[type="text"] {
+	color: #CCFFFF;
+	display: inline;
+}
+
+.runnerblock{
+	display: inline;
+}
+
+ul li select option {
+	color: black;
+}
+
+.prediction {
+	font-weight: normal;
+}
+
