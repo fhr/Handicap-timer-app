@@ -6,11 +6,7 @@
 	$('#enterhandicaps form').submit(refreshEntries);
 	$('#calcraces').click(raceList);
 	// create database to hold data on predicted and actual times
-	var shortName = 'Handicaps';
-    var version = '1.0';
-    var displayName = 'Handicaps';
-    var maxSize = 65536;
-    db = openDatabase(shortName, version, displayName, maxSize);
+    db = openDatabase('Handicaps', '1.0', 'Handicaps', 65536);
     db.transaction(
         function(transaction) {
             transaction.executeSql(
